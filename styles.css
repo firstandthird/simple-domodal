@@ -1,0 +1,86 @@
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale3d(.3, .3, .3);
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadein {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.simple-modal {
+  display: none;
+  height: 100%;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 2000;
+}
+
+.simple-modal.visible {
+  display: block;
+}
+
+.simple-modal .close {
+  background-color: transparent;
+  border: none;
+  color: #000;
+  cursor: pointer;
+  font-size: 28px;
+  padding: 0;
+  position: absolute;
+  right: 20px;
+  top: 10px;
+}
+
+.simple-modal .overlay {
+  animation: fadein .5s;
+  background-color: rgba(0, 0, 0, .5);
+  cursor: pointer;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.simple-modal .modal {
+  animation: zoomIn 0.3s;
+  background: #fff;
+  border-radius: 3px;
+  bottom: auto;
+  box-shadow: 0 3px 7px rgba(0, 0, 0, .3);
+  font-size: 0;
+  height: auto;
+  left: 0;
+  margin: auto;
+  max-width: 590px;
+  opacity: 1;
+  outline: 0;
+  overflow: hidden;
+  position: absolute;
+  right: 0;
+  top: 10%;
+  visibility: visible;
+  width: 100%;
+  z-index: 2001;
+}
+
+.simple-modal .modal-body {
+  display: block;
+  font-size: 16px;
+  text-align: left;
+  width: 100%;
+}
