@@ -10,27 +10,22 @@ npm install simple-domodal
 
 ## Usage
 
-You might use the [CSS](styles.css) and customise to your needs.
-
 ```html
 <body>
   <button aria-controls="some-id">This aria-controls will open the modal</button>
 
   <div id="some-id"
-       class="simple-modal"
+       class="modal"
        data-module="SimpleModal"
        role="dialog"
        tabindex="-1">
-    <div class="overlay" data-action="close"></div>
 
-    <div class="modal padding-md text-center" data-name="modal">
-      <button class="close" data-action="close" aria-label="Close modal">
+    <div class="modal-content padding-md text-center" data-name="modal">
+      <button class="modal-close" data-action="close" aria-label="Close modal">
         <span aria-hidden="true">×</span>
       </button>
 
-      <div class="modal-body">
-        ...
-      </div>
+      ...content
     </div>
   </div>
 </body>

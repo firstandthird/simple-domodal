@@ -15,6 +15,7 @@ export default class SimpleModal extends Domodule {
 
     on(document.body, 'keydown', this.onKeyDown.bind(this));
     on(this.el, Events.Reveal, this.open.bind(this));
+    on(this.el, 'click', this.onOverlayClick.bind(this));
     delegate(document.body, 'click', this.togglerSelector, this.onTogglerClick.bind(this));
     on(window, 'hashchange', this.checkHash.bind(this));
 
@@ -25,6 +26,15 @@ export default class SimpleModal extends Domodule {
     if (this.options.autoOpen) {
       this.open();
     }
+  }
+
+  /**
+   * Throws an error if data-name="modal" not present
+   */
+  get required() {
+    return {
+      named: ['modal']
+    };
   }
 
   /**
@@ -86,6 +96,17 @@ export default class SimpleModal extends Domodule {
     setTimeout(() => {
       this.focusedElement.focus();
     });
+  }
+
+  /**
+   * Closes the modal when overlay is clicked
+   */
+  onOverlayClick(e) {
+    if (this.els.modal.contains(e.target)) {
+      return;
+    }
+
+    this.close();
   }
 
   /**

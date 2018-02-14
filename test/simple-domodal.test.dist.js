@@ -841,6 +841,7 @@ var SimpleModal = function (_Domodule) {
 
       on(document.body, 'keydown', this.onKeyDown.bind(this));
       on(this.el, Events.Reveal, this.open.bind(this));
+      on(this.el, 'click', this.onOverlayClick.bind(this));
       delegate(document.body, 'click', this.togglerSelector, this.onTogglerClick.bind(this));
       on(window, 'hashchange', this.checkHash.bind(this));
 
@@ -854,12 +855,17 @@ var SimpleModal = function (_Domodule) {
     }
 
     /**
-     * Check whether the current hash matches the modal's id.
-     * @return {boolean}
+     * Throws an error if data-name="modal" not present
      */
 
   }, {
     key: 'hashMatches',
+
+
+    /**
+     * Check whether the current hash matches the modal's id.
+     * @return {boolean}
+     */
     value: function hashMatches() {
       return this.id === window.location.hash.substring(1);
     }
@@ -937,6 +943,20 @@ var SimpleModal = function (_Domodule) {
     }
 
     /**
+     * Closes the modal when overlay is clicked
+     */
+
+  }, {
+    key: 'onOverlayClick',
+    value: function onOverlayClick(e) {
+      if (this.els.modal.contains(e.target)) {
+        return;
+      }
+
+      this.close();
+    }
+
+    /**
      * Closes the modal if Esc key is pressed.
      * @param {KeyboardEvent} event
      */
@@ -947,6 +967,13 @@ var SimpleModal = function (_Domodule) {
       if (this.active && event.keyCode === 27) {
         this.close();
       }
+    }
+  }, {
+    key: 'required',
+    get: function get$$1() {
+      return {
+        named: ['modal']
+      };
     }
   }]);
   return SimpleModal;
@@ -8293,7 +8320,7 @@ var test = window.test;
 
 var setup = function setup(options) {
   var wrapper = document.createElement('div');
-  wrapper.innerHTML = '\n    <button class="works" aria-controls="some-id">Work button</button>\n\n    <div id="some-id"\n       class="simple-modal"\n       data-module="SimpleModal"\n       role="dialog"\n       tabindex="-1" ' + (options || '') + '>\n    <div class="overlay" data-action="close"></div>\n\n    <div class="modal padding-md text-center" data-name="modal">\n      <button class="close" data-action="close" aria-label="Close modal">\n        <span aria-hidden="true">\xD7</span>\n      </button>\n    </div>\n  </div>';
+  wrapper.innerHTML = '\n    <button class="works" aria-controls="some-id">Work button</button>\n\n    <div id="some-id"\n       class="modal"\n       data-module="SimpleModal"\n       role="dialog"\n       tabindex="-1" ' + (options || '') + '>\n\n    <div class="modal-content padding-md text-center" data-name="modal">\n      <button class="close" data-action="close" aria-label="Close modal">\n        <span aria-hidden="true">\xD7</span>\n      </button>\n    </div>\n  </div>';
 
   document.body.appendChild(wrapper);
 
@@ -8345,6 +8372,21 @@ test('Close', function (assert) {
     teardown();
     assert.end();
   });
+
+  instance.close();
+});
+
+test('Close on overlay click', function (assert) {
+  var instance = setup()[0];
+
+  instance.open();
+  assert.ok(instance.el.classList.contains('visible'), 'Modal is visible');
+
+  instance.el.click();
+
+  assert.ok(!instance.el.classList.contains('visible'), 'Modal is not visible');
+  teardown();
+  assert.end();
 
   instance.close();
 });
