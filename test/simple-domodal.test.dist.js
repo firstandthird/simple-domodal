@@ -821,7 +821,8 @@ window.addEventListener('DOMContentLoaded', function () {
 var Events = {
   Reveal: 'modal:reveal',
   Opened: 'modal:opened',
-  Closed: 'modal:closed'
+  Closed: 'modal:closed',
+  Resize: 'modal:resize'
 };
 
 var SimpleModal = function (_Domodule) {
@@ -843,6 +844,7 @@ var SimpleModal = function (_Domodule) {
       on(this.el, Events.Reveal, this.open.bind(this));
       delegate(document.body, 'click', this.togglerSelector, this.onTogglerClick.bind(this));
       on(window, 'hashchange', this.checkHash.bind(this));
+      on(window, 'resize', this.onResize.bind(this));
 
       if (this.options.focus) {
         this.focusElement = this.findOne(this.options.focus) || this.el;
@@ -912,6 +914,7 @@ var SimpleModal = function (_Domodule) {
       this.focusedElement = document.activeElement;
       addClass(this.el, 'visible');
       this.fire(Events.Opened);
+      this.fire(Events.Resize);
 
       setTimeout(function () {
         _this2.focusElement.focus();
@@ -947,6 +950,16 @@ var SimpleModal = function (_Domodule) {
       if (this.active && event.keyCode === 27) {
         this.close();
       }
+    }
+
+    /*
+     * Fires an event when the window is resized
+     */
+
+  }, {
+    key: 'onResize',
+    value: function onResize() {
+      this.fire(Events.Resize);
     }
   }]);
   return SimpleModal;
@@ -8382,6 +8395,20 @@ test('Button', function (assert) {
       assert.end();
     }, 150);
   }, 150);
+});
+
+test('Resize', function (assert) {
+  var instance = setup()[0];
+
+  assert.notOk(instance.el.classList.contains('visible'), 'Modal is not visible');
+
+  once(instance.el, 'modal:resize', function () {
+    assert.ok(instance.el.classList.contains('visible'), 'Modal is now visible');
+    teardown();
+    assert.end();
+  });
+
+  fire(instance.el, 'modal:reveal');
 });
 
 }());

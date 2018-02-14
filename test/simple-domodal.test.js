@@ -110,3 +110,17 @@ test('Button', assert => {
     }, 150);
   }, 150);
 });
+
+test('Resize', assert => {
+  const instance = setup()[0];
+
+  assert.notOk(instance.el.classList.contains('visible'), 'Modal is not visible');
+
+  once(instance.el, 'modal:resize', () => {
+    assert.ok(instance.el.classList.contains('visible'), 'Modal is now visible');
+    teardown();
+    assert.end();
+  });
+
+  fire(instance.el, 'modal:reveal');
+});
