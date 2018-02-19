@@ -410,10 +410,10 @@ var IECustomEvent = function CustomEvent(type, params) {
 
 var DomassistCustomEvent = canIuseNativeCustom() ? NativeCustomEvent : IECustomEvent;
 
-function fire(selector, type, params) {
+function fire$1(selector, type, params) {
   if (Array.isArray(selector)) {
     return selector.forEach(function (item) {
-      return fire(item, type, params);
+      return fire$1(item, type, params);
     });
   }
   var els = find(selector);
@@ -821,8 +821,7 @@ window.addEventListener('DOMContentLoaded', function () {
 var Events = {
   Reveal: 'modal:reveal',
   Opened: 'modal:opened',
-  Closed: 'modal:closed',
-  Resize: 'modal:resize'
+  Closed: 'modal:closed'
 };
 
 var SimpleModal = function (_Domodule) {
@@ -844,7 +843,6 @@ var SimpleModal = function (_Domodule) {
       on(this.el, Events.Reveal, this.open.bind(this));
       delegate(document.body, 'click', this.togglerSelector, this.onTogglerClick.bind(this));
       on(window, 'hashchange', this.checkHash.bind(this));
-      on(window, 'resize', this.onResize.bind(this));
 
       if (this.options.focus) {
         this.focusElement = this.findOne(this.options.focus) || this.el;
@@ -886,7 +884,7 @@ var SimpleModal = function (_Domodule) {
   }, {
     key: 'fire',
     value: function fire$$1(event) {
-      fire(this.el, event, { bubbles: true });
+      fire$1(this.el, event, { bubbles: true });
     }
 
     /**
@@ -914,7 +912,7 @@ var SimpleModal = function (_Domodule) {
       this.focusedElement = document.activeElement;
       addClass(this.el, 'visible');
       this.fire(Events.Opened);
-      this.fire(Events.Resize);
+      fire$1(window, 'resize');
 
       setTimeout(function () {
         _this2.focusElement.focus();
@@ -950,16 +948,6 @@ var SimpleModal = function (_Domodule) {
       if (this.active && event.keyCode === 27) {
         this.close();
       }
-    }
-
-    /*
-     * Fires an event when the window is resized
-     */
-
-  }, {
-    key: 'onResize',
-    value: function onResize() {
-      this.fire(Events.Resize);
     }
   }]);
   return SimpleModal;
@@ -8373,7 +8361,7 @@ test('Reveal', function (assert) {
     assert.end();
   });
 
-  fire(instance.el, 'modal:reveal');
+  fire$1(instance.el, 'modal:reveal');
 });
 
 test('Button', function (assert) {
@@ -8402,13 +8390,13 @@ test('Resize', function (assert) {
 
   assert.notOk(instance.el.classList.contains('visible'), 'Modal is not visible');
 
-  once(instance.el, 'modal:resize', function () {
+  once(window, 'resize', function () {
     assert.ok(instance.el.classList.contains('visible'), 'Modal is now visible');
     teardown();
     assert.end();
   });
 
-  fire(instance.el, 'modal:reveal');
+  fire$1(instance.el, 'modal:reveal');
 });
 
 }());

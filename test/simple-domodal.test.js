@@ -116,7 +116,7 @@ test('Resize', assert => {
 
   assert.notOk(instance.el.classList.contains('visible'), 'Modal is not visible');
 
-  once(instance.el, 'modal:resize', () => {
+  once(window, 'resize', () => {
     assert.ok(instance.el.classList.contains('visible'), 'Modal is now visible');
     teardown();
     assert.end();

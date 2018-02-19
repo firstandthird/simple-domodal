@@ -4,8 +4,7 @@ import { addClass, removeClass, on, fire, delegate } from 'domassist';
 const Events = {
   Reveal: 'modal:reveal',
   Opened: 'modal:opened',
-  Closed: 'modal:closed',
-  Resize: 'modal:resize'
+  Closed: 'modal:closed'
 };
 
 export default class SimpleModal extends Domodule {
@@ -18,7 +17,6 @@ export default class SimpleModal extends Domodule {
     on(this.el, Events.Reveal, this.open.bind(this));
     delegate(document.body, 'click', this.togglerSelector, this.onTogglerClick.bind(this));
     on(window, 'hashchange', this.checkHash.bind(this));
-    on(window, 'resize', this.onResize.bind(this));
 
     if (this.options.focus) {
       this.focusElement = this.findOne(this.options.focus) || this.el;
@@ -71,7 +69,7 @@ export default class SimpleModal extends Domodule {
     this.focusedElement = document.activeElement;
     addClass(this.el, 'visible');
     this.fire(Events.Opened);
-    this.fire(Events.Resize);
+    fire(window, 'resize');
 
     setTimeout(() => {
       this.focusElement.focus();
@@ -99,13 +97,6 @@ export default class SimpleModal extends Domodule {
     if (this.active && event.keyCode === 27) {
       this.close();
     }
-  }
-
-  /*
-   * Fires an event when the window is resized
-   */
-  onResize() {
-    this.fire(Events.Resize);
   }
 }
 
