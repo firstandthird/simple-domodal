@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="http://clientkit.io/clientkit.css">
+  <title>Modal demo</title>
+</head>
+<body>
+  <div class="container padding-yaxis-xl">
+    <h1 class="heading-2">Simple modal</h1>
+    <p class="margin-top-sm">You can see events on the console.</p>
+    <button class="button margin-top-md" aria-controls="other-modal">Click me to open</button>
+    <button class="button margin-top-md other">Or me</button>
+
+    <div id="welcome-modal"
+         class="modal"
+         data-module="SimpleModal"
+         data-module-auto-open="true"
+         role="dialog"
+         tabindex="-1">
+
+      <div class="modal-content padding-md text-center" data-name="modal">
+        <button class="modal-close" data-action="close" aria-label="Close modal">
+          <span aria-hidden="true">×</span>
+        </button>
+        <h2 class="heading-2">Auto open modal</h2>
+      </div>
+    </div>
+
+    <div id="other-modal"
+         class="modal"
+         data-module="SimpleModal"
+         role="dialog"
+         tabindex="-1">
+
+      <div class="modal-content padding-md" data-name="modal">
+        <h2 class="heading-2">Hi there</h2>
+        <button class="modal-close" data-action="close" aria-label="Close modal">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    var modal = document.getElementById('other-modal');
+    var button = document.querySelector('.other');
+
+    document.body.addEventListener('modal:opened', function() {
+      console.log('Modal opened');
+    });
+
+    document.body.addEventListener('modal:closed', function() {
+      console.log('Modal closed');
+    });
+
+    button.addEventListener('click', function() {
+      console.log('JS Handler clicked');
+      modal.dispatchEvent(new CustomEvent('modal:reveal'));
+    });
+  </script>
+  <script src="../dist/simple-domodal.js"></script>
+</body>
+</html>

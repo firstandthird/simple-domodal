@@ -1,0 +1,7 @@
+node_modules
+npm-debug.log
+.idea
+test/toc-anchor.test.dist.js
+dist
+*map
+.DS_Store
