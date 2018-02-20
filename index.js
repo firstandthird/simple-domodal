@@ -69,6 +69,7 @@ export default class SimpleModal extends Domodule {
     this.focusedElement = document.activeElement;
     addClass(this.el, 'visible');
     this.fire(Events.Opened);
+    fire(window, 'resize');
 
     setTimeout(() => {
       this.focusElement.focus();

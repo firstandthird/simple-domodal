@@ -410,10 +410,10 @@ var IECustomEvent = function CustomEvent(type, params) {
 
 var DomassistCustomEvent = canIuseNativeCustom() ? NativeCustomEvent : IECustomEvent;
 
-function fire(selector, type, params) {
+function fire$1(selector, type, params) {
   if (Array.isArray(selector)) {
     return selector.forEach(function (item) {
-      return fire(item, type, params);
+      return fire$1(item, type, params);
     });
   }
   var els = find(selector);
@@ -884,7 +884,7 @@ var SimpleModal = function (_Domodule) {
   }, {
     key: 'fire',
     value: function fire$$1(event) {
-      fire(this.el, event, { bubbles: true });
+      fire$1(this.el, event, { bubbles: true });
     }
 
     /**
@@ -912,6 +912,7 @@ var SimpleModal = function (_Domodule) {
       this.focusedElement = document.activeElement;
       addClass(this.el, 'visible');
       this.fire(Events.Opened);
+      fire$1(window, 'resize');
 
       setTimeout(function () {
         _this2.focusElement.focus();
@@ -8360,7 +8361,7 @@ test('Reveal', function (assert) {
     assert.end();
   });
 
-  fire(instance.el, 'modal:reveal');
+  fire$1(instance.el, 'modal:reveal');
 });
 
 test('Button', function (assert) {
@@ -8382,6 +8383,20 @@ test('Button', function (assert) {
       assert.end();
     }, 150);
   }, 150);
+});
+
+test('Resize', function (assert) {
+  var instance = setup()[0];
+
+  assert.notOk(instance.el.classList.contains('visible'), 'Modal is not visible');
+
+  once(window, 'resize', function () {
+    assert.ok(instance.el.classList.contains('visible'), 'Modal is now visible');
+    teardown();
+    assert.end();
+  });
+
+  fire$1(instance.el, 'modal:reveal');
 });
 
 }());
