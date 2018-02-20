@@ -9,13 +9,12 @@ const setup = options => {
     <button class="works" aria-controls="some-id">Work button</button>
 
     <div id="some-id"
-       class="simple-modal"
+       class="modal"
        data-module="SimpleModal"
        role="dialog"
        tabindex="-1" ${options || ''}>
-    <div class="overlay" data-action="close"></div>
 
-    <div class="modal padding-md text-center" data-name="modal">
+    <div class="modal-content padding-md text-center" data-name="modal">
       <button class="close" data-action="close" aria-label="Close modal">
         <span aria-hidden="true">×</span>
       </button>
@@ -72,6 +71,21 @@ test('Close', assert => {
     teardown();
     assert.end();
   });
+
+  instance.close();
+});
+
+test('Close on overlay click', assert => {
+  const instance = setup()[0];
+
+  instance.open();
+  assert.ok(instance.el.classList.contains('visible'), 'Modal is visible');
+
+  instance.el.click();
+
+  assert.ok(!instance.el.classList.contains('visible'), 'Modal is not visible');
+  teardown();
+  assert.end();
 
   instance.close();
 });
