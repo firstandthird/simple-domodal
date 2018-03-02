@@ -950,7 +950,7 @@ var SimpleModal = function (_Domodule) {
   }, {
     key: 'onOverlayClick',
     value: function onOverlayClick(e) {
-      if (this.els.modal.contains(e.target)) {
+      if (this.els.modal.contains(e.target) || !e.target.offsetParent) {
         return;
       }
 

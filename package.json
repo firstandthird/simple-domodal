@@ -9,7 +9,7 @@
     "build": "scriptkit build",
     "dev": "scriptkit dev",
     "test": "cat test/simple-domodal.test.dist.js | tape-run --static . --browser phantomjs --render tap-spec",
-    "prepublish": "scriptkit"
+    "prepublishOnly": "scriptkit"
   },
   "keywords": [
     "modal",
@@ -24,13 +24,13 @@
   },
   "homepage": "https://github.com/firstandthird/simple-domodal#readme",
   "devDependencies": {
-    "eslint-config-firstandthird": "4.1.1",
-    "eslint-plugin-import": "2.8.0",
+    "eslint-config-firstandthird": "4.3.0",
+    "eslint-plugin-import": "2.9.0",
     "phantomjs-prebuilt": "2.1.16",
     "scriptkit": "0.3.0",
     "tap-spec": "4.1.1",
     "tape-rollup": "4.6.4",
-    "tape-run": "3.0.0"
+    "tape-run": "3.0.4"
   },
   "scriptkit": {
     "files": {
@@ -52,7 +52,7 @@
     }
   },
   "dependencies": {
-    "domassist": "^1.9.1",
+    "domassist": "^1.10.0",
     "domodule": "^5.1.3"
   }
 }
