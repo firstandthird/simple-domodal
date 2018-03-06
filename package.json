@@ -1,6 +1,6 @@
 {
   "name": "simple-domodal",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Simple modal using Domodule Edit",
   "main": "dist/simple-domodal.js",
   "module": "index.js",
