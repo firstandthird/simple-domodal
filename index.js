@@ -76,7 +76,7 @@ export default class SimpleModal extends Domodule {
    */
   open() {
     this.active = true;
-    this.focusedElement = document.activeElement;
+    this.focusedElement = document.activeElement || document.body;
     addClass(this.el, 'visible');
     this.fire(Events.Opened);
     fire(window, 'resize');
@@ -95,7 +95,8 @@ export default class SimpleModal extends Domodule {
     this.fire(Events.Closed);
 
     setTimeout(() => {
-      this.focusedElement.focus();
+      window.location.hash = '';
+      (this.focusedElement || document.body).focus();
     });
   }
 

@@ -915,7 +915,7 @@ var SimpleModal = function (_Domodule) {
       var _this2 = this;
 
       this.active = true;
-      this.focusedElement = document.activeElement;
+      this.focusedElement = document.activeElement || document.body;
       addClass(this.el, 'visible');
       this.fire(Events.Opened);
       fire$1(window, 'resize');
@@ -939,7 +939,8 @@ var SimpleModal = function (_Domodule) {
       this.fire(Events.Closed);
 
       setTimeout(function () {
-        _this3.focusedElement.focus();
+        window.location.hash = '';
+        (_this3.focusedElement || document.body).focus();
       });
     }
 
