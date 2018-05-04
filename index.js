@@ -42,7 +42,7 @@ export default class SimpleModal extends Domodule {
    * @return {boolean}
    */
   hashMatches() {
-    return this.id === window.location.hash.substring(1);
+    return this.el.id === window.location.hash.substring(1);
   }
 
   /**
@@ -51,6 +51,8 @@ export default class SimpleModal extends Domodule {
   checkHash() {
     if (this.hashMatches()) {
       this.open();
+    } else if (this.active) {
+      this.close();
     }
   }
 
@@ -95,7 +97,7 @@ export default class SimpleModal extends Domodule {
     this.fire(Events.Closed);
 
     setTimeout(() => {
-      window.location.hash = '';
+      window.location.hash = '#!';
       (this.focusedElement || document.body).focus();
     });
   }
