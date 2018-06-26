@@ -1,5 +1,5 @@
 import Domodule from 'domodule';
-import { addClass, removeClass, on, fire, delegate } from 'domassist';
+import { addClass, removeClass, on, fire, matches, closest } from 'domassist';
 
 const Events = {
   Reveal: 'modal:reveal',
@@ -16,7 +16,6 @@ export default class SimpleModal extends Domodule {
     on(document.body, 'keydown', this.onKeyDown.bind(this));
     on(this.el, Events.Reveal, this.open.bind(this));
     on(this.el, 'click', this.onOverlayClick.bind(this));
-    delegate(document.body, 'click', this.togglerSelector, this.onTogglerClick.bind(this));
     on(window, 'hashchange', this.checkHash.bind(this));
 
     if (this.options.focus) {
@@ -25,6 +24,24 @@ export default class SimpleModal extends Domodule {
 
     if (this.options.autoOpen) {
       this.open();
+    }
+
+    on(document.body, 'click', this.onBodyClick.bind(this));
+  }
+
+  /**
+   * Delegate click handler for body to check if the click happened on or within
+   * an aria-control element.
+   * @param {MouseEvent} event
+   */
+  onBodyClick(event) {
+    if (event.target) {
+      const clickedOnElement = matches(event.target, this.togglerSelector);
+      const isWithinElement = closest(event.target, this.togglerSelector);
+
+      if (clickedOnElement || isWithinElement) {
+        this.togglerSelector();
+      }
     }
   }
 
