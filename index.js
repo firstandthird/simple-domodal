@@ -40,7 +40,7 @@ export default class SimpleModal extends Domodule {
       const isWithinElement = closest(event.target, this.togglerSelector);
 
       if (clickedOnElement || isWithinElement) {
-        this.togglerSelector();
+        this.onTogglerClick(event);
       }
     }
   }

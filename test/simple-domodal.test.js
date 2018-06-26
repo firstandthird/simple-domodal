@@ -6,7 +6,9 @@ import test from 'tape-rollup';
 const setup = options => {
   const wrapper = document.createElement('div');
   wrapper.innerHTML = `
-    <button class="works" aria-controls="some-id">Work button</button>
+    <button class="works" aria-controls="some-id">
+      <span>Work button</span>
+    </button>
 
     <div id="some-id"
        class="modal"
@@ -111,6 +113,27 @@ test('Button', assert => {
   button.focus();
   assert.notOk(instance.el.classList.contains('visible'), 'Modal is not visible');
   button.click();
+  assert.ok(instance.el.classList.contains('visible'), 'Modal is visible');
+
+  setTimeout(() => {
+    assert.equal(document.activeElement, instance.el, 'Modal got focus');
+    instance.close();
+
+    setTimeout(() => {
+      assert.equal(document.activeElement, button, 'Button got focus back');
+      teardown();
+      assert.end();
+    }, 150);
+  }, 150);
+});
+
+test('Inner Button', assert => {
+  const instance = setup()[0];
+  const button = findOne('.works');
+
+  button.focus();
+  assert.notOk(instance.el.classList.contains('visible'), 'Modal is not visible');
+  button.firstElementChild.click();
   assert.ok(instance.el.classList.contains('visible'), 'Modal is visible');
 
   setTimeout(() => {

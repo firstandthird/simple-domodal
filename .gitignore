@@ -1,7 +1,7 @@
 node_modules
 npm-debug.log
 .idea
-test/toc-anchor.test.dist.js
+test/simple-domodal.test.dist.js
 dist
 *map
 .DS_Store
