@@ -8,10 +8,17 @@ const Events = {
 };
 
 export default class SimpleModal extends Domodule {
+  get defaults() {
+    return {
+      closable: true
+    };
+  }
+
   postInit() {
     this.active = false;
     this.focusElement = this.el;
     this.togglerSelector = `[aria-controls="${this.el.id}"]`;
+    this.options.closable = this.options.closable === true;
 
     on(document.body, 'keydown', this.onKeyDown.bind(this));
     on(this.el, Events.Reveal, this.open.bind(this));
@@ -108,7 +115,11 @@ export default class SimpleModal extends Domodule {
   /**
    * Closes the modal and restores the focus to the last element that had it.
    */
-  close() {
+  close(force = false) {
+    if (!force && !this.options.closable) {
+      return;
+    }
+
     this.active = false;
     removeClass(this.el, 'visible');
     this.fire(Events.Closed);
