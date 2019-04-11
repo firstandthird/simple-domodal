@@ -1,5 +1,7 @@
 # Simple Domodal
 
+<span class="simple-domodal-npmversion"><a href="https://npmjs.org/package/simple-domodal" title="View this project on NPM"><img src="https://img.shields.io/npm/v/simple-domodal.svg" alt="NPM version" /></a></span>
+
 Simple modal using Domodule
 
 ## Installation
