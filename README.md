@@ -10,13 +10,27 @@ npm install simple-domodal
 
 ## Usage
 
+### JavaScript
+
+```js
+import 'simple-domodal';
+// or
+import SimpleModal from 'simple-domodal';
+```
+
+### HTML
+
 ```html
+...
+
 <body>
   <button aria-controls="some-id">This aria-controls will open the modal</button>
 
   <div id="some-id"
        class="modal"
        data-module="SimpleModal"
+       data-module-auto-open="false"
+       data-module-closable="true"
        role="dialog"
        tabindex="-1">
 
@@ -24,10 +38,10 @@ npm install simple-domodal
       <button class="modal-close" data-action="close" aria-label="Close modal">
         <span aria-hidden="true">×</span>
       </button>
-
-      ...content
     </div>
   </div>
+
+  <script src="simple-domodal.js"></script>
 </body>
 ```
 
@@ -46,4 +60,5 @@ Custom events are fired on open/close and you can fire an event to open the moda
 | Option     | Default       | Action                                                 |
 |------------|---------------|--------------------------------------------------------|
 | `autoOpen` | `false`       | If `true` the modal will open on pageload.             |
+| `closable` | `true`        | If `true` modal won't disappear on close.              |
 | `focus`    | Modal Element | Element that will gain focus once the modal is opened. |
