@@ -1,5 +1,7 @@
 # Simple Domodal
 
+![npm](https://img.shields.io/npm/v/simple-domodal.svg)
+
 Simple modal using Domodule
 
 ## Installation
