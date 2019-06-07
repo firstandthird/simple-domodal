@@ -134,7 +134,7 @@ export default class SimpleModal extends Domodule {
    * Closes the modal when overlay is clicked
    */
   onOverlayClick(e) {
-    if (this.els.modal.contains(e.target) || !document.contains(e.target)) {
+    if (this.els.modal.contains(e.target) || !document.body.contains(e.target)) {
       return;
     }
 
